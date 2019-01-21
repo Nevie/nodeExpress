@@ -5,7 +5,7 @@ var winston = require('winston');
 var options = {
     file: {
         level: 'info',
-        filename: `${appRoot}/logs/app.log`,
+        filename: `${appRoot}/logsFolder/app.log`,
         handleExceptions: true,
         json: true
     },
