@@ -6,14 +6,8 @@ let router = express.Router();
 const newsList = new News();
 
 router.get('/', function (req, res, next) {
-    readWriter.readFromFile( function (err, json) {
-        if (err) {
-            next(err);
-        }else{
-            newsList.setAll(json);
-            res.send(json)
-        }
-    });
+   let news = newsList.getNews();
+   res.send(news);
 });
 
 router.get('/:id', function (req, res, next) {
@@ -28,14 +22,13 @@ router.get('/:id', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
    let news = {
-        author: req.query.author,
-        title: req.query.title,
-        id: req.query.id
+        author: req.body.author,
+        title: req.body.title,
+        id: req.body.id
     };
     try {
         newsList.add(news);
         res.send(newsList);
-        readWriter.writeToFile(JSON.stringify(newsList));
     }
     catch (err) {
         next(err);
@@ -44,15 +37,14 @@ router.post('/', function (req, res, next) {
 
 router.put('/:id', function (req, res, next) {
     let news = {
-        author: req.query.author,
-        title: req.query.title,
-        id: req.query.id
+        author: req.body.author,
+        title: req.body.title,
+        id: req.body.id
     };
 
     try {
         newsList.updateById(req.params.id, news);
         res.send(newsList);
-        readWriter.writeToFile(JSON.stringify(newsList));
     }
     catch (err) {
         next(err);
@@ -64,7 +56,6 @@ router.delete('/:id', function (req, res, next) {
     try {
         newsList.delete(req.params.id);
         res.send(newsList);
-        readWriter.writeToFile(JSON.stringify(newsList));
     }
     catch (err) {
         next(err);

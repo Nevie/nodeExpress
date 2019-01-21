@@ -9,7 +9,7 @@ const file = './data/news.json';
 
 module.exports = {
     readFromFile: function (callback) {
-        readFileAsync(file, 'utf-8')
+     readFileAsync(file, 'utf-8')
             .then(content => {
                 callback(null, JSON.parse(content));
             })
