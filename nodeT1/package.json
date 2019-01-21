@@ -8,6 +8,7 @@
     "deb": "nodemon --inspect ./bin/www"
   },
   "dependencies": {
+    "app-root-path": "^2.1.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",

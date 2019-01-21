@@ -13,19 +13,10 @@ module.exports = {
             .then(content => {
                 callback(null, JSON.parse(content));
             })
-            .catch(err => {
-                console.error(err);
-            })
     },
 
     writeToFile: function (content) {
-        writeFileAsync(file, content)
-            .then(() => {
-                console.log('Added');
-            })
-            .catch(err => {
-                console.error(err);
-            })
+        writeFileAsync(file, content);
     }
 };
 
