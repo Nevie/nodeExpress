@@ -1,22 +1,31 @@
 const fs = require('fs');
-let appRoot = require('app-root-path');
+const util = require('util');
+require('util.promisify').shim();
+
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
+
+const file = './data/news.json';
 
 module.exports = {
-    readFromFile: function (path,callback){
-        fs.readFile(`${appRoot}${path}`, 'utf-8', (err, content) => {
-            if (err) throw err;
-            try {
+    readFromFile: function (callback) {
+        readFileAsync(file, 'utf-8')
+            .then(content => {
                 callback(null, JSON.parse(content));
-            } catch(exception) {
-                callback(exception);
-            }
-        });
+            })
+            .catch(err => {
+                console.error(err);
+            })
     },
-    writeToFile: function (path){
-        fs.writeFile(file, content, (err) => {
-            if (err) return console.error(err);
-            console.log('Text added');
-        })
+
+    writeToFile: function (content) {
+        writeFileAsync(file, content)
+            .then(() => {
+                console.log('Added');
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 };
 
